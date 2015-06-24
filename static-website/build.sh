@@ -1,1 +1,1 @@
-docker build -t docker-bits/static-website:1.0 .
+docker build -t docker-bits/static-website .

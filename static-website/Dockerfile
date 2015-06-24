@@ -5,4 +5,5 @@ MAINTAINER Arialdo Martini "arialdomartini@gmail.com"
 RUN apt-get install -y nginx
 RUN echo "This is a static website running inside a docker container" > /usr/share/nginx/html/index.html
 
+CMD nginx -g "daemon off;"
 EXPOSE 80

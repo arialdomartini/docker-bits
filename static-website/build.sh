@@ -1,1 +1,1 @@
-docker build -t docker-bits/static-website .
+docker build -t arialdo/static-website .

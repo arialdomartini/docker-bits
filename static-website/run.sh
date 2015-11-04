@@ -1,4 +1,6 @@
 PORT=8085
-docker run -d -p=${PORT}:80 --name=my-static-website docker-bits/static-website
-docker port my-static-website
-echo $(boot2docker ip):${PORT}
+IMAGE_NAME=static-website
+docker run -d -p=${PORT}:80 --name=${IMAGE_NAME} arialdo/static-website
+
+docker port ${IMAGE_NAME}
+echo $(docker-machine ip default):${PORT}

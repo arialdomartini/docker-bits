@@ -1,0 +1,26 @@
+
+website1:
+    image: nginx
+    ports:
+      - "5001:8080"
+    volumes:
+      - ./website1:/www/data
+      - ./nginx/:/etc/nginx/
+
+website2:
+    image: nginx
+    ports:
+      - "5002:8080"
+    volumes:
+      - ./website2:/www/data
+      - ./nginx/:/etc/nginx/
+
+balancer:
+  image: haproxy
+  volumes:    
+    - ./haproxy/:/usr/local/etc/haproxy
+  links:
+    - website1
+    - website2
+  ports:
+    - "8080:8080"

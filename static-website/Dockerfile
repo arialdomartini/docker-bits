@@ -3,3 +3,4 @@ FROM nginx
 MAINTAINER Arialdo Martini "arialdomartini@gmail.com"
 
 COPY site/* /usr/share/nginx/html/
+EXPOSE 80

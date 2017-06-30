@@ -10,17 +10,12 @@ node1=`docker-machine ip node1`
 docker swarm init --advertise-addr=${node1}
 token=`docker swarm join-token -q worker`
 
-echo "\n\n\n===> Configuring node2 as a worker in the swarm"
-eval `docker-machine env node2`
-docker swarm join \
-   --token ${token} \
-   ${node1}:2377
-
-echo "\n\n\n===> Configuring node3 as a worker in the swarm"
-eval `docker-machine env node3`
-docker swarm join \
-   --token ${token} \
-   ${node1}:2377
+for N in 2 3; do 
+    echo "\n\n\n===> Configuring node${N} as a worker in the swarm"
+    eval `docker-machine env node${N}`
+    docker swarm join \
+           --token ${token} \
+           ${node1}:2377
 
 echo "\n\n\n===> Creating the app docker image"
 eval `docker-machine env node1`
@@ -30,3 +25,6 @@ docker push arialdomartini/sample-swarm-app
 
 echo "\n\n\n===> Running 3 instances of the app in the swarm"
 docker service create --name=app --replicas=5 --publish 5000:5000 arialdomartini/sample-swarm-app
+
+
+docker swarm scale app --replicas=12

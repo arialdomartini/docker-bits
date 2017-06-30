@@ -1,7 +1,24 @@
 version: '2'
 
 services:
-  webapp:
+  webapp1:
     image: sampleapp
     ports:
-      - 5000:5000
+      - 5001:5000
+    network: uno
+  webapp2:
+    image: sampleapp
+    ports:
+      - 5002:5000
+    network: uno
+
+  webapp3:
+    image: sampleapp
+    ports:
+      - 5003:5000
+    network: due
+  webapp4:
+    image: sampleapp
+    ports:
+      - 5004:5000
+    network: due

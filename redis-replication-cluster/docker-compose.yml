@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  master:
+    image: 'bitnami/redis:latest'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      # - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_REPLICATION_MODE=master
+      - REDIS_PASSWORD=redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis_data:/bitnami/redis'
+    networks:
+      - redis-network
+
+  slave:
+    image: 'bitnami/redis:latest'
+    environment:
+      - REDIS_REPLICATION_MODE=slave
+      - REDIS_MASTER_HOST=master
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_MASTER_PASSWORD=redis
+      - REDIS_PASSWORD=redis
+    ports:
+      - '6380:6379'
+#    volumes:
+#      - 'redis_data:/bitnami/redis'
+    networks:
+      - redis-network
+
+volumes:
+  redis_data:
+    driver: local
+
+networks:
+    redis-network:
+        driver: bridge
